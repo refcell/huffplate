@@ -1,0 +1,49 @@
+/// @title SimpleStore
+/// @notice SPDX-License-Identifier: MIT
+/// @author asnared <https://github.com/abigger87>
+/// @notice A Simple Storage Contract written in Huff Language
+
+// Interface
+#define function setValue(uint256) nonpayable returns ()
+#define function getValue() view returns (uint256)
+
+// Storage Slots
+#define constant VALUE_LOCATION = FREE_STORAGE_POINTER()
+
+/// @notice Sets the value of the contract
+#define macro SET_VALUE() = takes (0) returns (0) {
+    0x04 calldataload   // [value]
+    [VALUE_LOCATION]    // [ptr, value]
+    sstore              // []
+
+    stop
+}
+
+/// @notice Gets the value of the contract
+#define macro GET_VALUE() = takes (0) returns (0) {
+    // Load value from storage.
+    [VALUE_LOCATION]     // [ptr]
+    sload                // [value]
+
+    // Store value in memory.
+    0x00 mstore          // []
+
+    // Return value
+    0x20 0x00 return     // []
+}
+
+/// @notice The main function dispatcher
+#define macro MAIN() = takes (0) returns (0) {
+    // Identify which function is being called.
+    0x00 calldataload 0xE0 shr                  // [sig]
+    dup1 __FUNC_SIG(setValue) eq set jumpi      // [sig]
+    dup1 __FUNC_SIG(getValue) eq get jumpi      // [sig]
+
+    // Revert if the function selector doesn't match any of the above.
+    0x00 dup1 revert
+
+    set:
+        SET_VALUE()
+    get:
+        GET_VALUE()
+}
