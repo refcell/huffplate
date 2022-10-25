@@ -19,7 +19,7 @@ forge install
 
 ## Blueprint
 
-```ml
+```txt
 lib
 ├─ forge-std — https://github.com/foundry-rs/forge-std
 ├─ solmate — https://github.com/Rari-Capital/solmate
