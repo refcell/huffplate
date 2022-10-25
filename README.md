@@ -78,11 +78,6 @@ Using [foundry.toml](./foundry.toml), Foundry is easily configurable.
 For a full list of configuration options, see the Foundry [configuration documentation](https://github.com/foundry-rs/foundry/blob/master/config/README.md#all-options).
 
 
-### License
-
-[MIT](https://github.com/abigger87/huffplate/blob/master/LICENSE)
-
-
 ### Acknowledgements
 
 - [femplate](https://github.com/abigger87/femplate)
